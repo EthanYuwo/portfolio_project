@@ -46,7 +46,8 @@ public class GPAStore1L<T> extends GPAStoreSecondary<T> {
     public final void transferFrom(GPAStore<T> source) {
         assert source != null : "Violation of: source is not null";
         assert source != this : "Violation of: source is not this";
-        assert source instanceof GPAStore1L<?> : "Violation of: source is of dynamic type GPAStore1L<?>";
+        assert source instanceof GPAStore1L<?>
+        : "Violation of: source is of dynamic type GPAStore1L<?>";
         GPAStore1L<T> localSource = (GPAStore1L<T>) source;
         this.rep = localSource.rep;
         localSource.createNewRep();
@@ -74,10 +75,15 @@ public class GPAStore1L<T> extends GPAStoreSecondary<T> {
      */
     @Override
     public final double remove(double x) {
-        while (!(this.rep.rightFront() == x)) {
-            this.rep.advance();
+        int i = 0;
+        double r = 0;
+        while (this.rep.get(i) != x) {
+            i++;
+            if (i >= this.length()) {
+                throw new AssertionError("Element not in this");
+            }
         }
-        double r = this.rep.removeRightFront();
+        r = this.rep.remove(i);
         return r;
     }
 
@@ -86,7 +92,7 @@ public class GPAStore1L<T> extends GPAStoreSecondary<T> {
      */
     @Override
     public final int length() {
-        int l = this.rep.leftLength() + this.rep.rightLength();
+        int l = this.rep.size();
         return l;
     }
 
