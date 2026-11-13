@@ -1,14 +1,26 @@
-package components.gpaBinarySearchTree;
-
-import components.binarytree.BinaryTree;
-import components.standard.Standard;
+package components.gpaStore;
 
 /**
- * gpa Binary Search Tree Kernel.
- * 
+ * gpa Store Kernel.
+ *
  * @param <T>
  */
-public interface GPAStoreKernel<T>
-      extends Standard<BinaryTree<T>>, Iterable<T> {
+public interface GPAStoreKernel<T> {
+      /**
+       * @param x
+       *              the element to be added
+       */
+      void add(double x);
 
+      /**
+       * @param x
+       *              the element to be removed
+       * @return the removed element
+       */
+      double remove(double x);
+
+      /**
+       * @return the length
+       */
+      int length();
 }
