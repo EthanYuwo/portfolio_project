@@ -9,12 +9,12 @@ import components.gpaStore.GPAStore1L;
 public class GpaStore1Ltest {
     @Test
     public void emptyTest() {
-        GPAStore<Double> g = new GPAStore1L<Double>();
+        GPAStore g = new GPAStore1L();
     }
 
     @Test
     public void addTest() {
-        GPAStore<Double> g = new GPAStore1L<Double>();
+        GPAStore g = new GPAStore1L();
         final double x = 3.4;
         g.add(x);
     }

@@ -3,11 +3,13 @@ package components.gpaStore;
 import java.util.ArrayList;
 
 /**
- * GPAStore1L.
+ * {@code GPAStore} represented by {@link java.util.ArrayList} with
+ * implementation of primary methods.
  *
- * @param <T>
+ * @correspondence this = $this.rep
+ *
  */
-public class GPAStore1L<T> extends GPAStoreSecondary<T> {
+public class GPAStore1L extends GPAStoreSecondary {
     /**
      * Represention of this.
      */
@@ -21,10 +23,11 @@ public class GPAStore1L<T> extends GPAStoreSecondary<T> {
     }
 
     /**
-     * @return new instance
+     * Standard Methods.
      */
-    @SuppressWarnings("unchecked")
-    public final GPAStore<T> newInstance() {
+
+    @Override
+    public final GPAStore newInstance() {
         try {
             return this.getClass().getConstructor().newInstance();
         } catch (ReflectiveOperationException e) {
@@ -33,22 +36,17 @@ public class GPAStore1L<T> extends GPAStoreSecondary<T> {
         }
     }
 
-    /**
-     * Clear this.
-     */
+    @Override
     public final void clear() {
         this.createNewRep();
     }
 
-    /**
-     * @param source
-     */
-    public final void transferFrom(GPAStore<T> source) {
+    @Override
+    public final void transferFrom(GPAStore source) {
         assert source != null : "Violation of: source is not null";
         assert source != this : "Violation of: source is not this";
-        assert source instanceof GPAStore1L<?>
-        : "Violation of: source is of dynamic type GPAStore1L<?>";
-        GPAStore1L<T> localSource = (GPAStore1L<T>) source;
+        assert source instanceof GPAStore1L : "Violation of: source is of dynamic type GPAStore1L";
+        GPAStore1L localSource = (GPAStore1L) source;
         this.rep = localSource.rep;
         localSource.createNewRep();
     }
@@ -60,36 +58,63 @@ public class GPAStore1L<T> extends GPAStoreSecondary<T> {
         this.createNewRep();
     }
 
-    /**
-     * @param x
-     *            the element to be added
+    /*
+     * Kernel methods.
      */
+
     @Override
     public final void add(double x) {
         this.rep.add(x);
     }
 
-    /**
-     * @param x
-     *            the element to be added
-     */
     @Override
     public final double remove(double x) {
-        int i = 0;
+        assert this.length() > 0;
+
         double r = 0;
-        while (this.rep.get(i) != x) {
-            i++;
-            if (i >= this.length()) {
-                throw new AssertionError("Element not in this");
-            }
+        boolean b = this.rep.remove(x);
+        if (b) {
+            r = x;
+        } else {
+            r = -1;
         }
-        r = this.rep.remove(i);
         return r;
     }
 
-    /**
-     * @return length.
-     */
+    @Override
+    public final double elementAt(int i) {
+        assert this.length() > 0;
+        assert i < this.length();
+
+        return this.rep.get(i);
+    }
+
+    @Override
+    public final double max() {
+        assert this.length() > 0;
+
+        double m = this.rep.get(0);
+        for (int i = 0; i < this.rep.size(); i++) {
+            if (this.rep.get(i) > m) {
+                m = this.rep.get(i);
+            }
+        }
+        return m;
+    }
+
+    @Override
+    public final double min() {
+        assert this.length() > 0;
+
+        double m = this.rep.get(0);
+        for (int i = 0; i < this.rep.size(); i++) {
+            if (this.rep.get(i) < m) {
+                m = this.rep.get(i);
+            }
+        }
+        return m;
+    }
+
     @Override
     public final int length() {
         int l = this.rep.size();
