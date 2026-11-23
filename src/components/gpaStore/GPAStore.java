@@ -8,26 +8,6 @@ import java.util.ArrayList;
 public interface GPAStore extends GPAStoreKernel {
 
     /**
-     * The lowest gpa.
-     *
-     * @return the lowest gpa in this
-     * @requires {@code this /= <>}
-     * @ensures {|this| = |#this|}
-     */
-    @Override
-    double min();
-
-    /**
-     * The highest gpa.
-     *
-     * @return the highest gpa in this
-     * @requires {@code this /= <>}
-     * @ensures {|this| = |#this|}
-     */
-    @Override
-    double max();
-
-    /**
      * The average gpa.
      *
      * @return the highest gpa
@@ -47,7 +27,7 @@ public interface GPAStore extends GPAStoreKernel {
 
     /**
      * Elements in this sorted from lowest to highest.
-     *
+     * @updates this
      */
     void sort();
 
@@ -56,9 +36,19 @@ public interface GPAStore extends GPAStoreKernel {
      *            number of divisions
      * @return an array of arrays containing elements from a corresponding
      *         division
-     * @requires |this| % x = 0
+     * @requires |this| != 0;
+     * @clears this
      * @ensures ArrayList Contents = this ** x and #this = this ** x
      */
     ArrayList<GPAStore> split(int x);
+
+    /**
+     * @param a
+     *            ArrayList of GPAStore
+     * @replaces this
+     * @requires |a| > 0
+     * @ensures |a| = |#a| and this = elements of a[0..n]
+     */
+    void assemble(ArrayList<GPAStore> a);
 
 }

@@ -13,6 +13,7 @@ public interface GPAStoreKernel extends Standard<GPAStore> {
        * @param x
        *              the element to be added
        * @updates this
+       * @requires x > 0
        * @ensures |this| = |#this| + 1
        */
       void add(double x);
@@ -34,10 +35,7 @@ public interface GPAStoreKernel extends Standard<GPAStore> {
        * @param i
        *              index
        * @return the element at index i.
-       * @requires <pre> {@code this /= <>},
-       * i < |this|,
-       * 0 < i
-       * </pre>
+       * @requires {@code this /= <>} and 0 < i < |this|
        */
       double elementAt(int i);
 

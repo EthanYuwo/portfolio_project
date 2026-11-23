@@ -6,7 +6,8 @@ import java.util.ArrayList;
  * {@code GPAStore} represented by {@link java.util.ArrayList} with
  * implementation of primary methods.
  *
- * @correspondence this = $this.rep
+ * @convention value of $this.rep > 0
+ * @correspondence this = [value of $this.rep]
  *
  */
 public class GPAStore1L extends GPAStoreSecondary {
@@ -45,7 +46,8 @@ public class GPAStore1L extends GPAStoreSecondary {
     public final void transferFrom(GPAStore source) {
         assert source != null : "Violation of: source is not null";
         assert source != this : "Violation of: source is not this";
-        assert source instanceof GPAStore1L : "Violation of: source is of dynamic type GPAStore1L";
+        assert source
+        instanceof GPAStore1L : "Violation of: source is of dynamic type GPAStore1L";
         GPAStore1L localSource = (GPAStore1L) source;
         this.rep = localSource.rep;
         localSource.createNewRep();
@@ -64,6 +66,7 @@ public class GPAStore1L extends GPAStoreSecondary {
 
     @Override
     public final void add(double x) {
+        assert x > 0;
         this.rep.add(x);
     }
 
@@ -84,7 +87,7 @@ public class GPAStore1L extends GPAStoreSecondary {
     @Override
     public final double elementAt(int i) {
         assert this.length() > 0;
-        assert i < this.length();
+        assert (i < this.length() && 0 < i);
 
         return this.rep.get(i);
     }
